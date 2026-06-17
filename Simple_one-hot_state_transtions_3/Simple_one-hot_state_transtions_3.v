@@ -1,0 +1,20 @@
+module top_module(
+        input             in         ,
+        input    [3:0]    state      ,
+        output   [3:0]    next_state ,
+        output            out
+);
+
+        parameter          A = 4'd0 ;
+        parameter          B = 4'd1 ;
+        parameter          C = 4'd2 ;
+        parameter          D = 4'd3 ;
+
+        assign next_state[A] = (state[A] & ~in) | (state[C] & ~in)                      ; 
+        assign next_state[B] = (state[A] &  in) | (state[B] &  in) | (state[D] & in)    ;
+        assign next_state[C] = (state[B] & ~in) | (state[D] & ~in)                      ;
+        assign next_state[D] = (state[C] &  in)                                         ;
+
+        assign out           = (state[D] == 1'b1)                                       ;
+
+endmodule
